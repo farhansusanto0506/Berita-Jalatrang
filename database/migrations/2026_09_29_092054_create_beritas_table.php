@@ -17,6 +17,7 @@ return new class extends Migration
         $table->string('kategori');
         $table->string('gambar')->nullable();
         $table->text('isi');
+        $table->string('link')->nullable();
         $table->unsignedInteger('dilihat')->default(0);
         $table->string('penulis')->default('Admin');
         $table->timestamps();

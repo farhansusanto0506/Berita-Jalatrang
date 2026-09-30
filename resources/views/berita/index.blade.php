@@ -64,8 +64,8 @@
 
                             <div class="d-flex justify-content-between align-items-center mt-1">
                                 <small class="text-muted"><i class="bi bi-eye"></i> {{ $berita->dilihat }}</small>
-                                <a href="{{ route('berita.show', $berita) }}" class="btn btn-sm btn-baca">
-                                    Baca <i class="bi bi-arrow-right"></i>
+                                <a href="{{ $berita->link }}" target="_blank" rel="noopener" class="btn btn-sm btn-baca">
+                                Baca <i class="bi bi-arrow-right"></i> 
                                 </a>
                             </div>
 
