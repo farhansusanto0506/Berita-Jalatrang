@@ -66,6 +66,11 @@
             padding: 12px 16px;
             border-radius: 6px 6px 0 0;
         }
+
+        .isi-berita p { margin-bottom: 1rem; line-height: 1.7; }
+        .isi-berita h3 { margin-top: 1.5rem; font-size: 1.35rem; }
+        .isi-berita ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .isi-berita ul li { list-style: disc; }
     </style>
 </head>
 <body>
@@ -74,8 +79,8 @@
             <a class="navbar-brand text-white d-flex align-items-center" href="{{ route('berita.index') }}">
                 <span class="fs-4 me-2">🏛️</span>
                 <span>
-                    PEMERINTAH DESA CONTOH
-                    <small>KECAMATAN CONTOH KABUPATEN CONTOH</small>
+                    PEMERINTAH DESA JALATRANG
+                    <small>KECAMATAN CIPAKU KABUPATEN CIAMIS</small>
                 </span>
             </a>
             <div class="ms-auto">
@@ -94,8 +99,8 @@
 
     <footer class="footer-desa py-4 mt-5">
         <div class="container">
-            <strong class="text-white">Pemerintah Desa Contoh</strong><br>
-            Jalan Raya Contoh No. 1, Kecamatan Contoh, Kabupaten Contoh<br>
+            <strong class="text-white">Pemerintah Desa Jalatrang</strong><br>
+            Jalan Raya Jalatrang No. 1, Kecamatan Cipaku, Kabupaten Ciamis<br>
             <a href="{{ route('berita.index') }}">Berita</a>
         </div>
     </footer>
