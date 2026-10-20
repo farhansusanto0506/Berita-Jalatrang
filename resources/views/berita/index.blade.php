@@ -31,7 +31,9 @@
             </div>
         </div>
 
-        <a href="{{ route('berita.create') }}" class="btn btn-success w-100 mt-3">+ Tambah Berita</a>
+        @auth
+            <a href="{{ route('berita.create') }}" class="btn btn-success w-100 mt-3">+ Tambah Berita</a>
+        @endauth
     </div>
 
     {{-- Daftar berita --}}
@@ -77,15 +79,20 @@
                                 <a href="{{ route('berita.show', $berita) }}" class="btn btn-sm btn-baca">Baca</a>
                             </div>
 
-                            <div class="mt-2 pt-2 border-top d-flex gap-2">
-                                <a href="{{ route('berita.edit', $berita) }}" class="btn btn-sm btn-outline-warning">Edit</a>
-                                <form action="{{ route('berita.destroy', $berita) }}" method="POST"
-                                      onsubmit="return confirm('Yakin hapus berita ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
-                                </form>
-                            </div>
+                            @auth
+                                <div class="mt-2 pt-2 border-top d-flex gap-2">
+                                    <a href="{{ route('berita.edit', $berita) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+
+                                    @if (auth()->user()->isAdmin())
+                                        <form action="{{ route('berita.destroy', $berita) }}" method="POST"
+                                              onsubmit="return confirm('Yakin hapus berita ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endauth
                         </div>
                     </div>
                 </div>

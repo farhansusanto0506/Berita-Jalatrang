@@ -14,6 +14,7 @@
             <span class="badge badge-kategori text-white">{{ $berita->kategori->nama }}</span>
 
             <h2 class="mt-3">{{ $berita->judul }}</h2>
+            <p class="text-muted mb-3">Penulis: {{ $berita->user->name }}</p>
 
             <div class="mb-3">
                 @foreach ($berita->tags as $tag)

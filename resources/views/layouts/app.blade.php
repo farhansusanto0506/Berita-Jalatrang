@@ -83,8 +83,21 @@
                     <small>KECAMATAN CIPAKU KABUPATEN CIAMIS</small>
                 </span>
             </a>
-            <div class="ms-auto">
+            <div class="ms-auto d-flex align-items-center gap-2">
                 <a href="{{ route('berita.index') }}" class="nav-link d-inline-block active px-3 py-1">Berita</a>
+
+                @auth
+                    <span class="text-white small">
+                        <i class="bi bi-person-circle"></i>
+                        {{ auth()->user()->name }} ({{ auth()->user()->role }})
+                    </span>
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-light">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-warning">Login</a>
+                @endauth
             </div>
         </div>
     </nav>

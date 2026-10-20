@@ -56,7 +56,7 @@ class BeritaController extends Controller
             $data['gambar'] = $request->file('gambar')->store('berita', 'public');
         }
 
-        $berita = Berita::create(Arr::except($data, 'tags'));
+        $berita = $request->user()->beritas()->create(Arr::except($data, 'tags'));
         $berita->tags()->sync($data['tags'] ?? []);
 
         return redirect()->route('berita.index')
@@ -66,7 +66,7 @@ class BeritaController extends Controller
     public function show(Berita $berita)
     {
         $berita->increment('dilihat');
-        $berita->load(['kategori', 'tags']);
+        $berita->load(['kategori', 'tags', 'user']);
 
         return view('berita.show', compact('berita'));
     }
