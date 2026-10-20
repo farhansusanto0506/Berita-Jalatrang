@@ -10,7 +10,8 @@
                 <i class="bi bi-pencil-square me-1"></i> Edit Berita
             </div>
             <div class="card-body">
-                <form action="{{ route('berita.update', $berita) }}" method="POST">
+                {{-- 1. TAMBAHKAN enctype="multipart/form-data" --}}
+                <form action="{{ route('berita.update', $berita) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -22,20 +23,47 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="kategori" class="form-label fw-semibold">Kategori</label>
-                        <select name="kategori" id="kategori" class="form-select">
+                        <label for="kategori_id" class="form-label fw-semibold">Kategori</label>
+                        <select name="kategori_id" id="kategori_id" class="form-select">
                             <option value="">-- Pilih Kategori --</option>
-                            @foreach (['Olahraga', 'Pendidikan', 'Potensi', 'Pembangunan'] as $k)
-                                <option value="{{ $k }}" @selected(old('kategori', $berita->kategori) == $k)>{{ $k }}</option>
+                            @foreach ($kategoris as $k)
+                                <option value="{{ $k->id }}"
+                                    @selected(old('kategori_id', $berita->kategori_id) == $k->id)>{{ $k->nama }}</option>
                             @endforeach
                         </select>
-                        @error('kategori') <div class="text-danger small">{{ $message }}</div> @enderror
+                        @error('kategori_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold d-block">Tag</label>
+                        @foreach ($tags as $tag)
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="tags[]"
+                                       id="tag{{ $tag->id }}" value="{{ $tag->id }}"
+                                       @checked(in_array($tag->id, old('tags', $berita->tags->pluck('id')->toArray())))>
+                                <label class="form-check-label" for="tag{{ $tag->id }}">#{{ $tag->nama }}</label>
+                            </div>
+                        @endforeach
                     </div>
 
                     <div class="mb-3">
                         <label for="isi" class="form-label fw-semibold">Isi Berita</label>
                         <textarea name="isi" id="isi" rows="6" class="form-control">{{ old('isi', $berita->isi) }}</textarea>
                         @error('isi') <div class="text-danger small">{{ $message }}</div> @enderror
+                    </div>
+
+                    {{-- 2. TAMBAHKAN FIELD GAMBAR & PRATINJAU GAMBAR LAMA --}}
+                    <div class="mb-3">
+                        <label for="gambar" class="form-label fw-semibold">Gambar</label>
+                        @if ($berita->gambar)
+                            <div>
+                                <img src="{{ asset('storage/' . $berita->gambar) }}"
+                                     class="img-thumbnail mb-2" style="max-height:140px;">
+                            </div>
+                        @endif
+                        <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
+                        <small class="text-muted">Kosongkan jika tidak ingin mengganti gambar.</small>
+                        @error('gambar') <div class="text-danger small">{{ $message }}</div> @enderror
                     </div>
 
                     <div class="mb-3">

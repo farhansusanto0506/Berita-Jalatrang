@@ -20,8 +20,8 @@
                     <label class="form-label fw-semibold">Kategori</label>
                     <select name="kategori" class="form-select mb-3">
                         <option value="">Semua Kategori</option>
-                        @foreach (['Olahraga', 'Pendidikan', 'Potensi', 'Pembangunan'] as $k)
-                            <option value="{{ $k }}" @selected(request('kategori') == $k)>{{ $k }}</option>
+                        @foreach ($kategoris as $k)
+                            <option value="{{ $k->id }}" @selected(request('kategori') == $k->id)>{{ $k->nama }}</option>
                         @endforeach
                     </select>
 
@@ -41,13 +41,14 @@
                 <div class="col-md-4 mb-4">
                     <div class="card card-berita h-100">
 
-                        <img src="{{ $berita->gambar ? asset('images/berita/'.$berita->gambar) : 'https://placehold.co/400x220?text=Berita+Desa' }}"
+                        {{-- PATH GAMBAR SUDAH DISESUAIKAN KE STORAGE --}}
+                        <img src="{{ $berita->gambar ? asset('storage/'.$berita->gambar) : 'https://placehold.co/400x220?text=Berita+Desa' }}"
                              class="card-img-top" style="height:180px; object-fit:cover;"
                              alt="{{ $berita->judul }}">
 
                         <div class="card-body d-flex flex-column">
                             <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="badge badge-kategori text-white">{{ $berita->kategori }}</span>
+                                <span class="badge badge-kategori text-white">{{ $berita->kategori->nama }}</span>
                                 <small class="text-muted">
                                     <i class="bi bi-calendar3"></i>
                                     {{ $berita->created_at->translatedFormat('d M Y') }}
@@ -63,9 +64,12 @@
                             <p class="text-muted small flex-grow-1">
                                 {{ Str::limit(strip_tags(str_replace('</p>', ' </p>', $berita->isi)), 80) }}
                             </p>
+
                             <div class="mb-2">
-                                <span class="tag-pill">#{{ Str::slug($berita->kategori) }}</span>
-                                <span class="tag-pill">#desa</span>
+                                @foreach ($berita->tags as $tag)
+                                    <a href="{{ route('berita.index', ['tag' => $tag->id]) }}"
+                                       class="tag-pill text-decoration-none">#{{ $tag->nama }}</a>
+                                @endforeach
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
